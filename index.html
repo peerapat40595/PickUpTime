@@ -6,30 +6,22 @@
 	<script src="https://cdn.firebase.com/js/simple-login/1.6.4/firebase-simple-login.js"></script>
 	<script type="text/javascript">
 
-	var userRef = new Firebase("https://pickuptime.firebaseio.com/users");
+	console.log("Hello");
+
+	var ref = new Firebase("https://pickuptime.firebaseio.com/users");
+
+	ref.authWithOAuthRedirect("facebook", function(error, authData) {
+	  if (error) {
+	    console.log("Login Failed!", error);
+	  } else {
+	    console.log("Authenticated successfully with payload:", authData);
+	  }
+	});
 
 	$(function(){
 		$("#fblogin").click(function(){
 
-			var auth = userRef.authWithOAuthRedirect("facebook", function(error, authData) { 
-
-			  if (error) {
-			    console.log("Login Failed!", error);
-			  } 
-			  else {
-			  	userRef.push({uid: authData.uid, token: authData.token});
-			  	console.log(authData.uid);
-			    console.log("Authenticated successfully with payload:", authData);
-			    console.log(authData.facebook.accessToken);
-			  }
-
-			}, 
-
-			{
-			  remember: "sessionOnly",
-			  scope: "email"
-			});
-
+			
 		});
 	});	
 	</script>
