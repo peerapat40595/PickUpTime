@@ -11,7 +11,7 @@
 	$(function(){
 		$("#fblogin").click(function(){
 
-			userRef.authWithOAuthPopup("facebook", function(error, authData) { 
+			userRef.authWithOAuthRedirect("facebook", function(error, authData) { 
 				
 			  if (error) {
 			    console.log("Login Failed!", error);
