@@ -16,10 +16,8 @@
 			  if (error) {
 			    console.log("Login Failed!", error);
 			  } 
-			  if (authData){
-			  	console.log(authData.uid)
-			  }
 			  else {
+			  	userRef.push({uid: authData.uid, token: authData.token});
 			    console.log("Authenticated successfully with payload:", authData);
 			  }
 
@@ -37,5 +35,6 @@
 </head>
 <body>
 	<a href="#" id="fblogin">FB Login</a>
+	<div id='messagesDiv'></div>
 </body>
 </html>
