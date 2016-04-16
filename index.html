@@ -11,14 +11,16 @@
 	$(function(){
 		$("#fblogin").click(function(){
 
-			userRef.authWithOAuthRedirect("facebook", function(error, authData) { 
+			var auth = userRef.authWithOAuthRedirect("facebook", function(error, authData) { 
 
 			  if (error) {
 			    console.log("Login Failed!", error);
 			  } 
 			  else {
 			  	userRef.push({uid: authData.uid, token: authData.token});
+			  	console.log(authData.uid);
 			    console.log("Authenticated successfully with payload:", authData);
+			    console.log(authData.facebook.accessToken);
 			  }
 
 			}, 
