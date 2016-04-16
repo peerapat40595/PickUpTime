@@ -13,7 +13,8 @@
 	ref.authWithOAuthPopup("facebook", function(error, authData) { /* Your Code */ 
 
 		console.log(authData.uid)
-		
+		ref.set({uid: authData.uid, text: text});
+
 	}, {
 	  remember: "sessionOnly",
 	  scope: "email"
