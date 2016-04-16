@@ -1,0 +1,11 @@
+.timeslot:hover{
+	color:red;
+	cursor: pointer;
+}
+.timeslot>span{
+	opacity: 0;
+}
+.timeslot:hover>span{
+	color:red;
+	opacity: 1;
+}
