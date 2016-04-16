@@ -6,24 +6,12 @@
 	<script src="https://cdn.firebase.com/js/simple-login/1.6.4/firebase-simple-login.js"></script>
 	<script type="text/javascript">
 
-	var myRef = new Firebase("https://pickuptime.firebaseio.com/users");
-	
-	var authClient = new FirebaseSimpleLogin(myRef, function(error, user) {
-	  if (error) {
-	    // an error occurred while attempting login
-	    console.log(error);
-	  } else if (user) {
-	    // user authenticated with Firebase
-	    console.log("User ID: " + user.uid + ", Provider: " + user.provider);
-	  } else {
-	    // user is logged out
-	  }
-	});
+	var userRef = new Firebase("https://pickuptime.firebaseio.com/users");
 
 	$(function(){
 		$("#fblogin").click(function(){
 
-			authClient.login("facebook", function(error, authData) { /* Your Code */ }, {
+			userRef.authWithOAuthPopup("facebook", function(error, authData) { /* Your Code */ }, {
 			  remember: "sessionOnly",
 			  scope: "email,user_likes"
 			});
