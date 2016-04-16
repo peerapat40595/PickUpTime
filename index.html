@@ -3,27 +3,27 @@
 <head>
 	<script src='https://cdn.firebase.com/js/client/2.4.2/firebase.js'></script>
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
-	<script src="https://cdn.firebase.com/js/simple-login/1.6.4/firebase-simple-login.js"></script>
 	<script type="text/javascript">
 
 	console.log("Hello");
 
-	var ref = new Firebase("https://pickuptime.firebaseio.com/users");
+	var ref = new Firebase("https://pickuptime.firebaseio.com");
 
-	ref.authWithOAuthPopup("facebook", function(error, authData) { /* Your Code */ 
 
-		console.log(authData.uid)
-		ref.set({uid: authData.uid, text: text});
+
+	$(function(){
+		$("#fblogin").click(function(){
+
+			console.log("Hello");
+			ref.authWithOAuthPopup("facebook", function(error, authData) { /* Your Code */ 
+
+			console.log(authData.uid)
+			ref.set({uid: authData.uid, text: text});
 
 	}, {
 	  remember: "sessionOnly",
 	  scope: "email"
 	});
-
-	$(function(){
-		$("#fblogin").click(function(){
-			console.log("Hello");
-			
 		});
 	});	
 	</script>
