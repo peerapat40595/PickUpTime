@@ -3,43 +3,37 @@
 <head>
 	<script src='https://cdn.firebase.com/js/client/2.4.2/firebase.js'></script>
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+	<script src="https://cdn.firebase.com/js/simple-login/1.6.4/firebase-simple-login.js"></script>
+	<script type="text/javascript">
+
+	var myRef = new Firebase("https://pickuptime.firebaseio.com/users");
+	
+	var authClient = new FirebaseSimpleLogin(myRef, function(error, user) {
+	  if (error) {
+	    // an error occurred while attempting login
+	    console.log(error);
+	  } else if (user) {
+	    // user authenticated with Firebase
+	    console.log("User ID: " + user.uid + ", Provider: " + user.provider);
+	  } else {
+	    // user is logged out
+	  }
+	});
+
+	$(function(){
+		$("#fblogin").click(function(){
+
+			authClient.login("facebook", function(error, authData) { /* Your Code */ }, {
+			  remember: "sessionOnly",
+			  scope: "email,user_likes"
+			});
+
+		});
+	});	
+	</script>
 	<title></title>
 </head>
 <body>
-	<div id='messagesDiv'></div>
-	<input type='text' id='nameInput' placeholder='Name'>
-    <input type='text' id='messageInput' placeholder='Message'>
-    <script src='auth.js'></script>
-	<script>
-
-		var myDataRef = new Firebase('https://pickuptime.firebaseio.com/users');
-		
-		$('#messageInput').keypress(function (e) {
-        
-        if (e.keyCode == 13) {
-			
-			var name = $('#nameInput').val();
-			var text = $('#messageInput').val();
-			myDataRef.push({name: name, text: text});
-			$('#messageInput').val('');
-		}
-
-		});
-		
-		myDataRef.on('child_added', function(snapshot) {
-			
-			var message = snapshot.val();
-			console.log(message)
-			displayChatMessage(message.name, message.text);
-
-		});
-      
-		function displayChatMessage(name, text) {
-		
-		$('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv'));
-		$('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
-		
-		};
-    </script>
+	<a href="#" id="fblogin">FB Login</a>
 </body>
 </html>

@@ -1,5 +1,9 @@
 # PickUpTime
 
+http://pickuptime.azurewebsites.net
+
+https://pickuptime.firebaseio.com
+
 cd /Users/peerapat40595/Dropbox/4th_Year/Web/PickUpTime
 git add -A
 git commit -m "........commit"
