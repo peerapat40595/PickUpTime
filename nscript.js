@@ -8,18 +8,17 @@ $("#createevent").click(function(e){
     var addtime = $('<button>',{id: "addslot",type: "button" ,text: "Add time slot"});
     var timelist = $('<div>',{id: "timeslotlist"});
     var timelistadd = $('<div>',{id: "timeslotlistadd"});
-    $('<div>').addClass("cevent").append(name).append(desc).append(addtime).append(timelist).append(timelistadd).appendTo("div#content");
+    var submit = $('<button>',{id: "submit",type: "button" ,text: "Submit",onclick:"join()"});
+    var cancel = $('<button>',{id: "cancel",type: "button" ,text: "Cancel",onclick:'$("div#content").html(originalState)'});
+    $('<div>').addClass("cevent").append(name).append(desc).append(addtime).append(timelist).append(timelistadd).append(submit).append(cancel).appendTo("div#content");
 
     var originalState2 = $("div#timeslotlistadd").html();
     $("#addslot").click(function(e){
-    //var originalState = $("div#content").html();
-    //$("div#content").html(originalState);
-    //$("div#content").html(originalState);
     $("div#timeslotlistadd").html(originalState2);
       e.preventDefault();
-      var date = $('<input>',{type: "text",name: "date", value: "Enter date"});
-      var from = $('<input>',{type: "text",name: "from", value: "Enter time begin"});
-      var to = $('<input>',{type: "text",name: "to", value: "Enter time finish"});
+      var date = $('<input>',{type: "date",name: "date", value: "Enter date"});
+      var from = $('<input>',{type: "time",name: "from", value: "Enter time begin"});
+      var to = $('<input>',{type: "time",name: "to", value: "Enter time finish"});
       var adds = $('<button>',{text: "Add",type: "button",class:"add"});
       $('<div>').addClass("timeslota").append(date).append(from).append(to).append(adds).appendTo("div#timeslotlistadd");
       $(".add").click(function(e){
@@ -44,4 +43,6 @@ $("#createevent").click(function(e){
     var adds = $('<button>',{text: "Add",type: "button"});
     $('<div>').addClass("timeslot").append(date).append(from).append(to).append(adds).appendTo("div#timeslotlist");
 }*/
+function join(){
 
+}
