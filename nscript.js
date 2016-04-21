@@ -14,12 +14,15 @@ $("#createevent").click(function(e){
 $('#joinevent').click(function(e){
     $("div#content").html(originalState);
     e.preventDefault();
+    var label1=$('<label>',{text:"Date :",class:"slotlabel"});
+    var label2=$('<label>',{text:"From :",class:"slotlabel"});
+    var label3=$('<label>',{text:"To :",class:"slotlabel"});
     var addform=$('<div>',{id:"addform"});
     var adddate=$('<input>',{type: "date",name: "date", value: "Enter date"});
     var addfrom=$('<input>',{type: "time",name: "from", value: "Enter time begin"});
     var addto=$('<input>',{type: "time",name: "to", value: "Enter time finish"});
-    var addt=$('<button>',{id:"addtime",type:"button",text:"Add"});
-    addform.append(adddate).append(addfrom).append(addto).append(addt);
+    var addt=$('<button>',{id:"addtime",type:"button",text:"Add",class:"button-primary"});
+    addform.append(label1).append(adddate).append(label2).append(addfrom).append(label3).append(addto).append(addt);
     var table=$('<div>',{class:"table-scrollable"});
     var insidetable=$('<table>',{class:"table table-bordered table-hover",id:"example"});
     table.append(insidetable);
@@ -46,6 +49,7 @@ $('#joinevent').click(function(e){
       updateScore();
     });
 });
+
 
 function drawTable(){
 
@@ -89,21 +93,39 @@ function updateScore(){
     var yellow = 0;
     var green = 0;
     for(var row = 1 ; row < document.getElementById('example').rows.length-1 ; row++){
-      console.log("row["+row+"] col["+col+"] : "+document.getElementById('example').rows[row].cells[col].className );
-      if(document.getElementById('example').rows[row].cells[col].className.indexOf('stage1')>-1 || document.getElementById('example').rows[row].cells[col].className.indexOf('warning')>-1){
+      console.log("row["+row+"] col["+col+"] : "+document.getElementById('example').rows
+
+[row].cells[col].className );
+      if(document.getElementById('example').rows[row].cells[col].className.indexOf
+
+('stage1')>-1 || document.getElementById('example').rows[row].cells[col].className.indexOf
+
+('warning')>-1){
         $(document.getElementById('example').rows[row].cells[col]).html('May Be');
         yellow++;
-      }else if(document.getElementById('example').rows[row].cells[col].className.indexOf('stage2')>-1 || document.getElementById('example').rows[row].cells[col].className.indexOf('danger')>-1){
+      }else if(document.getElementById('example').rows[row].cells[col].className.indexOf
+
+('stage2')>-1 || document.getElementById('example').rows[row].cells[col].className.indexOf
+
+('danger')>-1){
         $(document.getElementById('example').rows[row].cells[col]).html('Busy');
         red++;
-      }else if(document.getElementById('example').rows[row].cells[col].className.indexOf('stage3')>-1 || document.getElementById('example').rows[row].cells[col].className.indexOf('success')>-1){
+      }else if(document.getElementById('example').rows[row].cells[col].className.indexOf
+
+('stage3')>-1 || document.getElementById('example').rows[row].cells[col].className.indexOf
+
+('success')>-1){
         $(document.getElementById('example').rows[row].cells[col]).html('Available');
         green++;
       }
     }
-    $('.footer'+col).html('<span class="green">'+green+'</span> : <span class="yellow">'+yellow+'</span> : <span class="red">'+red+'</span>');
+    $('.footer'+col).html('<span class="green">'+green+'</span> : <span 
+
+class="yellow">'+yellow+'</span> : <span class="red">'+red+'</span>');
   }
 }
+
+
 
 
 

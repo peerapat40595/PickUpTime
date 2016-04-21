@@ -154,5 +154,26 @@ td.highlight {
 	margin-right: 2%;
 	margin-left:2%;
 }
-
-
+#addform{
+	width:55%;
+	height:30%;
+	margin-left: 20%;
+	margin-top: 2%;
+	background: white;
+	border-radius: 10px;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	position: relative;
+	display: inline-block;
+}
+#addform>*{
+	margin-left: 25px;
+	margin-top:5px;
+	display: inline-block;
+}
