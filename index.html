@@ -10,19 +10,15 @@
 			
 			var ref = new Firebase("https://pickuptime.firebaseio.com");
 			ref.push({name: "Peerapat", text: "Hello"});
-
-			ref.authWithOAuthRedirect("facebook", function(error, authData) {
+			
+			ref.authWithOAuthPopup("facebook", function(error, authData) {
 			  if (error) {
 			    console.log("Login Failed!", error);
 			  } else {
-			    // the access token will allow us to make Open Graph API calls
-			    console.log(authData.facebook.accessToken);
-			    ref.push({name: "asdasd", text: "asdasdas"});
+			    console.log("Authenticated successfully with payload:", authData);
 			  }
-			}, {
-				remember: "sessionOnly",
-			  	scope: "email" // the permissions requested
 			});
+			
 		});
 	});	
 	</script>
