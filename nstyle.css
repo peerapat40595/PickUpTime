@@ -1,11 +1,106 @@
+body{
+	position: relative;
+	width:100%;
+	height:700px;
+	background: #ececec;
+}
+.timeslot{
+	margin-top:3px;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	background:white;
+	width:50%;
+}
 .timeslot:hover{
 	color:red;
 	cursor: pointer;
+	border-style: dashed;
+	border-color: #f24c4c;
+	border-width: 1px;
 }
 .timeslot>span{
 	opacity: 0;
+	margin-left: 20%;
+	font-weight: bold;
 }
 .timeslot:hover>span{
 	color:red;
 	opacity: 1;
 }
+td.highlight {
+    background-color: whitesmoke !important;
+}
+#head{
+	position: relative;
+	width:100%;
+	height:7%;
+	padding: 2%;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	background:white;
+}
+#minilogo{
+	position: relative;
+	width:15%;
+	height:50%;
+	display: inline-block;
+	margin-right: 2%;
+}
+#createevent{
+	position: relative;
+	display: inline-block;
+	margin-right: 6%;
+}
+#joinevent{
+	position: relative;
+	display: inline-block;
+	margin-right: 3%;
+	margin-left: 1%;
+}
+.cevent{
+	background:white;
+	margin-top: 5%;
+	width:70%;
+	margin-left: 15%;
+	padding: 20px;
+	border-radius: 20px;
+	border-color: #494949;
+}
+.cevent input{
+	margin-left: 2%;
+}
+.cevent button{
+	margin-left: 3%;
+	margin-top: 2%;
+}
+.cevent button[type="reset"]{
+	background: #f24c4c;
+	color:white;
+}
+#login{
+	background-image: url("face-using.png");
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	width:15%;
+	height:65%;
+}
+.timeslot label{
+	display: inline-block;
+	margin-right: 2%;
+	margin-left:2%;
+}
+

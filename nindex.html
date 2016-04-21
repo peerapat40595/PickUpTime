@@ -2,17 +2,25 @@
 <html>
 	<head>
 	<script src='https://cdn.firebase.com/js/client/2.4.2/firebase.js'></script>
+	
+	<script src='code.jquery.com/jquery-1.12.0.min.js'></script>
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
 	<link rel="stylesheet" href="nstyle.css"/>
+	<link rel="stylesheet" href="Skeleton-2.0.4/css/normalize.css"/>
+	<link rel="stylesheet" href="Skeleton-2.0.4/css/skeleton.css"/>
 	<title>Testttt</title>
 </head>
 	<body>
 	<div id="head">
-		<button id="createevent">+ Create Event</button>
+		<div id="minilogo"></div>
+		<button id="createevent" class="button-primary">+ Create Event</button>
 		<input type="text" name="keyword" value="Enter Keyword" >
-		<button id="joinevent" onclick="join()">Join Event</button>
+		<button id="joinevent" class="button-primary" onclick="join() ">Join Event</button>
+		<div id="login"></div>
 	</div>
 	<div id="content"></div>
 	</body>
+
 	<script src="nscript.js"></script>
+	<script src='jquery.dataTables.min.js'></script>
 </html>
