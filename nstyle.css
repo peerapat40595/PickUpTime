@@ -16,7 +16,7 @@ body{
 	-ms-flex-wrap: wrap;
 	flex-wrap: wrap;
 	background:white;
-	width:50%;
+	width:55%;
 }
 .timeslot:hover{
 	color:red;

@@ -3,48 +3,27 @@ var originalState = $("div#content").html();
 $("#createevent").click(function(e){
     $("div#content").html(originalState);
     e.preventDefault();
+    var count=0;
     var name = $('<input>',{type: "text",name: "name", value: "Enter event name",width:"25%"});
     var desc = $('<input>',{type: "text",name: "description", value: "Type Description",width:"70%"});
-    var addtime = $('<button>',{id: "addslot",type: "button" ,text: "Add time slot"});
-    var timelist = $('<div>',{id: "timeslotlist"});
-    var timelistadd = $('<div>',{id: "timeslotlistadd"});
     var submit = $('<button>',{id: "submit",type: "submit" ,class:"button-primary",text: "Submit",onclick:"join()"});
     var cancel = $('<button>',{id: "cancel",type: "reset" ,text: "Cancel",onclick:'$("div#content").html(originalState)'});
-    $('<div>').addClass("cevent").append(name).append(desc).append(addtime).append(timelist).append(timelistadd).append(submit).append(cancel).appendTo("div#content");
+    $('<div>').addClass("cevent").append(name).append(desc).append(submit).append(cancel).appendTo("div#content");
 
-    var originalState2 = $("div#timeslotlistadd").html();
-    $("#addslot").click(function(e){
-    $("div#timeslotlistadd").html(originalState2);
-      e.preventDefault();
-      var date = $('<input>',{type: "date",name: "date", value: "Enter date"});
-      var from = $('<input>',{type: "time",name: "from", value: "Enter time begin"});
-      var to = $('<input>',{type: "time",name: "to", value: "Enter time finish"});
-      var adds = $('<button>',{text: "Add",type: "button",class:"add"});
-      $('<div>').addClass("timeslota").append(date).append(from).append(to).append(adds).appendTo("div#timeslotlistadd");
-      $(".add").click(function(e){
-        var sdate=$('input[name=date]').val();
-        var sfrom=$('input[name=from]').val();
-        var sto=$('input[name=to]').val();
-        var del=$('<span>',{text:"remove",id:"del"});
-        var label1=$('<label>',{text:"Date :",class:"slotlabel"});
-        var label2=$('<label>',{text:"From :",class:"slotlabel"});
-        var label3=$('<label>',{text:"To :",class:"slotlabel"});
-        $(".timeslota").remove();
-        originalState2 = $("div#timeslotlistadd").html();
-        $('<div>').addClass("timeslot").append(label1).append(sdate).append(label2).append(sfrom).append(label3).append(sto).append(del).appendTo("div#timeslotlist");
-        $(document).on('click', '.timeslot', function() {
-          $(this).remove();
-        });
-      });
-    });
 });
 $('#joinevent').click(function(e){
     $("div#content").html(originalState);
     e.preventDefault();
+    var addform=$('<div>',{id:"addform"});
+    var adddate=$('<input>',{type: "date",name: "date", value: "Enter date"});
+    var addfrom=$('<input>',{type: "time",name: "from", value: "Enter time begin"});
+    var addto=$('<input>',{type: "time",name: "to", value: "Enter time finish"});
+    var addt=$('<button>',{id:"addtime",type:"button",text:"Add"});
+    addform.append(adddate).append(addfrom).append(addto).append(addt);
     var table=$('<div>',{class:"table-scrollable"});
     var insidetable=$('<table>',{class:"table table-bordered table-hover",id:"example"});
     table.append(insidetable);
-    $('<div>').addClass("portlet-body").append(table).appendTo("div#content");
+    $('<div>').addClass("portlet-body").append(addform).append(table).appendTo("div#content");
     drawTable(/*jsonfile*/);
     updateScore();
     // stage1 = yellow
@@ -67,11 +46,6 @@ $('#joinevent').click(function(e){
       updateScore();
     });
 });
-
-function join(){
-
-}
-
 
 function drawTable(){
 
@@ -130,3 +104,6 @@ function updateScore(){
     $('.footer'+col).html('<span class="green">'+green+'</span> : <span class="yellow">'+yellow+'</span> : <span class="red">'+red+'</span>');
   }
 }
+
+
+
