@@ -11,7 +11,7 @@
 			var ref = new Firebase("https://pickuptime.firebaseio.com");
 			ref.push({name: "Peerapat3", text: "Hello"});
 
-			ref.authWithOAuthPopup("facebook", function(error, authData) {
+			ref.authWithOAuthRedirect("facebook", function(error, authData) {
 			  if (error) {
 			    console.log("Login Failed!", error);
 			  } else {
@@ -19,7 +19,7 @@
 			    console.log(authData.facebook.accessToken);
 			  }
 			}, {
-				remember: "sessionOnly",
+				// remember: "sessionOnly",
 			  	scope: "email" // the permissions requested
 			});
 			
