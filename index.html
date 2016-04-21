@@ -4,32 +4,137 @@
 	<script src='https://cdn.firebase.com/js/client/2.4.2/firebase.js'></script>
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
 	<script type="text/javascript">
+	// var QueryString = function () {
+	//   // This function is anonymous, is executed immediately and 
+	//   // the return value is assigned to QueryString!
+	//   var query_string = {};
+	//   var query = window.location.search.substring(1);
+	//   var vars = query.split("&");
+	//   for (var i=0;i<vars.length;i++) {
+	//     var pair = vars[i].split("=");
+	//         // If first entry with this name
+	//     if (typeof query_string[pair[0]] === "undefined") {
+	//       query_string[pair[0]] = decodeURIComponent(pair[1]);
+	//         // If second entry with this name
+	//     } else if (typeof query_string[pair[0]] === "string") {
+	//       var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+	//       query_string[pair[0]] = arr;
+	//         // If third or later entry with this name
+	//     } else {
+	//       query_string[pair[0]].push(decodeURIComponent(pair[1]));
+	//     }
+	//   } 
+	//     return query_string;
+	// }();
+
 
 	$(function(){
-		$("#fblogin").click(function(){
-			
-			var ref = new Firebase("https://pickuptime.firebaseio.com");
-			ref.push({name: "Peerapat3", text: "Hello"});
+		$("#GotoEvent").click(function(){
+			ref.onAuth(function globalOnAuth(authData) {
 
-			ref.authWithOAuthPopup("facebook", function(error, authData) {
-			  if (error) {
-			    console.log("Login Failed!", error);
-			  } else {
-			    // the access token will allow us to make Open Graph API calls
-			    console.log(authData.facebook.accessToken);
-			  }
-			}, {
-				// remember: "sessionOnly",
-			  	scope: "email" // the permissions requested
+				console.log(authData);
 			});
+		});
+	});
+	$(function(){
+		$("#logout").click(function(){
 			
+			ref.unauth();
+		});
+	});
+	var QuestionID = "";
+	$(function(){
+		$("#createEvent").click(function(){
+			name = "ประชุม";
+			description = "sdsd";
+			var added = ref.child("Question").push({name: name,description: description});
+			QuestionID = added.key();
+			ref.onAuth(function globalOnAuth(authData) {
+				ref.child("Question").child(QuestionID).update({
+					createdBy_uid: authData.uid,
+					createdBy_facebookId: authData.facebook.id, 
+			    	createdBy_displayName: authData.facebook.displayName,
+				});
+			});
 		});
 	});	
+	$(function(){
+		$("#addTimeSlot").click(function(){
+			var currentdate = new Date(); 
+
+			if(!!QuestionID){
+			ref.child("Question").child(QuestionID).child("timeslot").push({
+				date: getDayMonth(currentdate),
+				time1: "13:00",
+				time2: "14.00"
+				});
+			}
+		});
+	});	
+	$(function(){
+		$("#show").click(function(){
+
+			ref.child("Question").child(QuestionID).on("child_added", function(snapshot, prevChildKey) {
+			  var newPost = snapshot.val();
+			  console.log(newPost);
+			});
+		});
+	});	
+
+	$(function(){
+		$("#answer").click(function(){
+
+			if(!!QuestionID){
+
+				ref.onAuth(function globalOnAuth(authData) {
+					ref.child("Question").child(QuestionID)
+					.child("Answer").child(authData.facebook.id)
+					.child("-KFtqO6JPmHf6sZpGGC2")
+					.update({
+						answer: 1
+					});
+				});
+			}
+
+		});
+	});
+
+	function getDayMonth(today = new Date()){
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+
+		if(dd<10) {
+		    dd='0'+dd
+		} 
+
+		if(mm<10) {
+		    mm='0'+mm
+		} 
+
+		today = mm+'/'+dd+'/'+yyyy;
+
+		return today;
+	}
+
 	</script>
 	<title></title>
 </head>
 <body>
 	<a href="#" id="fblogin">FB Login</a>
+	<br>
+	<a href="#" id="GotoEvent">GoToEvent</a>
+	<br>
+	<a href="#" id="logout">Logout</a>	
+	<br>
+	<a href="#" id="createEvent">createEvent</a>	
+	<br>
+	<a href="#" id="addTimeSlot">addTimeSlot</a>	
+	<br>
+	<a href="#" id="show">Show</a>	
+	<br>
+	<a href="#" id="answer">Answer</a>
+
 	<div id='messagesDiv'></div>
 </body>
 </html>
