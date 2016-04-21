@@ -9,14 +9,18 @@
 		$("#fblogin").click(function(){
 			
 			var ref = new Firebase("https://pickuptime.firebaseio.com");
-			ref.push({name: "Peerapat", text: "Hello"});
-			
+			ref.push({name: "Peerapat3", text: "Hello"});
+
 			ref.authWithOAuthPopup("facebook", function(error, authData) {
 			  if (error) {
 			    console.log("Login Failed!", error);
 			  } else {
-			    console.log("Authenticated successfully with payload:", authData);
+			    // the access token will allow us to make Open Graph API calls
+			    console.log(authData.facebook.accessToken);
 			  }
+			}, {
+				remember: "sessionOnly",
+			  	scope: "email" // the permissions requested
 			});
 			
 		});
