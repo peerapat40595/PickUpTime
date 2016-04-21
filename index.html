@@ -9,8 +9,8 @@
 		$("#fblogin").click(function(){
 			
 			var ref = new Firebase("https://pickuptime.firebaseio.com");
-			ref.push({name: "asdasd", text: "asdasdas"});
-			
+			ref.push({name: "Peerapat", text: "Hello"});
+
 			ref.authWithOAuthRedirect("facebook", function(error, authData) {
 			  if (error) {
 			    console.log("Login Failed!", error);
