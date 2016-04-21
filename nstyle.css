@@ -61,6 +61,11 @@ td.highlight {
 	height:50%;
 	display: inline-block;
 	margin-right: 2%;
+	background-image: url("logo.gif");
+	background-repeat: no-repeat;
+	background-size:  100%;
+	margin-left: 5px;
+
 }
 #createevent{
 	position: relative;
