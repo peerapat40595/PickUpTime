@@ -38,53 +38,95 @@ $("#createevent").click(function(e){
       });
     });
 });
-/**/
-/*function test(){
-    var date = $('<input>',{type: "text",name: "date", value: "Enter date"});
-    var from = $('<input>',{type: "text",name: "description", value: "Enter time begin"});
-    var to = $('<input>',{type: "text",name: "description", value: "Enter time finish"});
-    var adds = $('<button>',{text: "Add",type: "button"});
-    $('<div>').addClass("timeslot").append(date).append(from).append(to).append(adds).appendTo("div#timeslotlist");
-}*/
-function join(){
-  /*var personavail = [
-    [ "Tiger Nixon", 1 , 2, 1, 0 ],
-    [ "Garrett Winters", 1 , 1, 1, 1 ],
-    [ "Ashton Cox", 0 , 2, 2, 0 ],
-    [ "Cedric Kelly", 0 , 1, 0, 2 ]
-  ];
-  var timeavail=["13/5/2016 13.00-16.00","16/5/2016 13.00-16.00","16/5/2016 16.00-19.00","17/5/2016 16.00-19.00"];
-  var choose =$('<div>',{id:"choose"});
-  
-  for (var i = 0; i < timeavail.length; i++) {
-    var select =$('<select>',{size:"1", class:"select",name:"select"+timeavail[i]});
-    for (var j = 1; j <4; j++) {
-      var dtime=$('<option>',{value:j,text:j})
-      select.append(dtime);
-    };
-    choose.append(select);
-  };
-  choose.appendTo("div#content");
-  $('<table>').addClass("eventdata").appendTo("div#content");
-  var table=$('.eventdata').DataTable( {
-        bFilter: false, 
-        bInfo: false,
-        bPaginate:false,
-        //bLengthChange: false,
-       // bSort: false,
-       // bSortMulti: false,
-       // bProcessing: false,
-       // bSortClasses: false, 
-      //  bServerSide: false,
-      //  bDeferRender: false, 
-        data: personavail,
-        columns: [
-            { title: "Name" },
-            { title: timeavail[0] },
-            { title: timeavail[1]},
-            { title: timeavail[2] },
-            { title: timeavail[3] }
-        ]
-    } );*/
+$('#joinevent').click(function(e){
+    $("div#content").html(originalState);
+    e.preventDefault();
+    var table=$('<div>',{class:"table-scrollable"});
+    var insidetable=$('<table>',{class:"table table-bordered table-hover",id:"example"});
+    table.append(insidetable);
+    $('<div>').addClass("portlet-body").append(table).appendTo("div#content");
+    drawTable(/*jsonfile*/);
+    updateScore();
+    // stage1 = yellow
+    // stage2 = red
+    // stage3 = green
+    $('.stage.selected').click(function(){
+      if($(this).hasClass('stage1')){
+        $(this).removeClass('stage1');
+        $(this).addClass('stage3');
+        $(this).html('Available');
+      }else if($(this).hasClass('stage2')){
+        $(this).removeClass('stage2');
+        $(this).addClass('stage1');
+        $(this).html('May Be');
+      }else if($(this).hasClass('stage3')){
+        $(this).removeClass('stage3');
+        $(this).addClass('stage2');
+        $(this).html('Busy');
+      }
+      updateScore();
+    });
+});
 
+function join(){
+
+}
+
+
+function drawTable(){
+
+  // header & footer
+  $('.table-header').html('<th>Name</th>');
+  $('.table-footer').html('<th></th>');
+  for(var number = 0 ; number < /* number of timeslot */ ; number++ ){
+    $('.table-header').append('<th>'+/*date*/[number]+'<br>'+/*time range*/[number]+'</th>');
+    $('.table-footer').append('<th class="footer'+(number+1)+'"></th>');
+  }
+  
+  // data
+  for(var number = 0 ; number < /*number of people*/ ; number++){
+    if(/* this people is selected*/){
+      $('tbody').append('<tr><td class= "name-selected">'+/*name*/+'</td>');
+      for( var index = 0 ; index < /*number of time slot*/ ; index++){
+        $('tbody').append(' <td class = "stage stage'+/*status*/+' selected"></td>');
+      }
+      $('tbody').append('</tr>');
+    }
+    else{
+      $('tbody').append('<tr><td>'+/*name*/+'</td>');
+      for( var index = 0 ; index < /*number of time slot*/ ; index++){
+        if(/*status*/ == "1"){
+          $('tbody').append(' <td class = "stage warning"></td>');
+        }else if(/*status*/ == "2"){
+          $('tbody').append(' <td class = "stage danger"></td>');
+        }else if(/*status*/ == "3"){
+          $('tbody').append(' <td class = "stage success"></td>');
+        }
+      }
+      $('tbody').append('</tr>');
+    }
+    }
+
+  }
+
+function updateScore(){
+  for(var col = 1 ; col < document.getElementById('example').rows[0].cells.length ; col++){
+    var red = 0;
+    var yellow = 0;
+    var green = 0;
+    for(var row = 1 ; row < document.getElementById('example').rows.length-1 ; row++){
+      console.log("row["+row+"] col["+col+"] : "+document.getElementById('example').rows[row].cells[col].className );
+      if(document.getElementById('example').rows[row].cells[col].className.indexOf('stage1')>-1 || document.getElementById('example').rows[row].cells[col].className.indexOf('warning')>-1){
+        $(document.getElementById('example').rows[row].cells[col]).html('May Be');
+        yellow++;
+      }else if(document.getElementById('example').rows[row].cells[col].className.indexOf('stage2')>-1 || document.getElementById('example').rows[row].cells[col].className.indexOf('danger')>-1){
+        $(document.getElementById('example').rows[row].cells[col]).html('Busy');
+        red++;
+      }else if(document.getElementById('example').rows[row].cells[col].className.indexOf('stage3')>-1 || document.getElementById('example').rows[row].cells[col].className.indexOf('success')>-1){
+        $(document.getElementById('example').rows[row].cells[col]).html('Available');
+        green++;
+      }
+    }
+    $('.footer'+col).html('<span class="green">'+green+'</span> : <span class="yellow">'+yellow+'</span> : <span class="red">'+red+'</span>');
+  }
 }
