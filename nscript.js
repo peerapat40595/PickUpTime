@@ -1,6 +1,50 @@
+var ref = new Firebase("https://pickuptime.firebaseio.com");
+
+$(function(){
+  $("#fblogin").click(function(){
+    
+
+    ref.authWithOAuthPopup("facebook", function(error, authData) {
+
+      if (error) {
+        console.log("Login Failed!", error);
+      } 
+
+      else {
+        // the access token will allow us to make Open Graph API calls
+      ref
+      .child("users")
+      .child(authData.facebook.id)
+      .update({
+        uid: authData.uid,
+        facebookId: authData.facebook.id, 
+          profileImage: authData.facebook.profileImageURL,
+          displayName: authData.facebook.displayName,
+          email: authData.facebook.email
+        });
+
+        $('<button id="createevent" class="button-primary" onclick=initevent()>+ Create Event</button><input type="text" name="keyword" placeholder="Enter Keyword" ><button id="joinevent" class="button-primary" >Join Event</button><div id="loginas"><div id="profilepic"></div><div id="profiledata"><div id="profilename">Testt</div><a href="logout">Log out</a></div></div>').insertAfter( "#minilogo" );
+
+      }
+
+    }, 
+
+    {
+      remember: "sessionOnly",
+        scope: "email" // the permissions requested
+
+    });
+  });
+});
+
+
+
 var originalState = $("div#content").html();
-//var originalState2=$("div#timeslotlist").html();
+
+// function initevent(){
 $("#createevent").click(function(e){
+    var count = 0;
+    console.log(count)
     $("div#content").html(originalState);
     e.preventDefault();
     var name = $('<input>',{type: "text",name: "name", value: "Enter event name",width:"25%"});
@@ -22,6 +66,8 @@ $("#createevent").click(function(e){
       var adds = $('<button>',{text: "Add",type: "button",class:"add"});
       $('<div>').addClass("timeslota").append(date).append(from).append(to).append(adds).appendTo("div#timeslotlistadd");
       $(".add").click(function(e){
+              count++;
+      console.log(count);
         var sdate=$('input[name=date]').val();
         var sfrom=$('input[name=from]').val();
         var sto=$('input[name=to]').val();
@@ -33,11 +79,15 @@ $("#createevent").click(function(e){
         originalState2 = $("div#timeslotlistadd").html();
         $('<div>').addClass("timeslot").append(label1).append(sdate).append(label2).append(sfrom).append(label3).append(sto).append(del).appendTo("div#timeslotlist");
         $(document).on('click', '.timeslot', function() {
+
           $(this).remove();
+          count--;
+          console.log(count);
         });
       });
     });
 });
+// }
 $('#joinevent').click(function(e){
     $("div#content").html(originalState);
     e.preventDefault();
@@ -73,60 +123,60 @@ function join(){
 }
 
 
-function drawTable(){
+// function drawTable(){
 
-  // header & footer
-  $('.table-header').html('<th>Name</th>');
-  $('.table-footer').html('<th></th>');
-  for(var number = 0 ; number < /* number of timeslot */ ; number++ ){
-    $('.table-header').append('<th>'+/*date*/[number]+'<br>'+/*time range*/[number]+'</th>');
-    $('.table-footer').append('<th class="footer'+(number+1)+'"></th>');
-  }
+//   // header & footer
+//   $('.table-header').html('<th>Name</th>');
+//   $('.table-footer').html('<th></th>');
+//   for(var number = 0 ; number < /* number of timeslot */ ; number++ ){
+//     $('.table-header').append('<th>'+/*date*/[number]+'<br>'+/*time range*/[number]+'</th>');
+//     $('.table-footer').append('<th class="footer'+(number+1)+'"></th>');
+//   }
   
-  // data
-  for(var number = 0 ; number < /*number of people*/ ; number++){
-    if(/* this people is selected*/){
-      $('tbody').append('<tr><td class= "name-selected">'+/*name*/+'</td>');
-      for( var index = 0 ; index < /*number of time slot*/ ; index++){
-        $('tbody').append(' <td class = "stage stage'+/*status*/+' selected"></td>');
-      }
-      $('tbody').append('</tr>');
-    }
-    else{
-      $('tbody').append('<tr><td>'+/*name*/+'</td>');
-      for( var index = 0 ; index < /*number of time slot*/ ; index++){
-        if(/*status*/ == "1"){
-          $('tbody').append(' <td class = "stage warning"></td>');
-        }else if(/*status*/ == "2"){
-          $('tbody').append(' <td class = "stage danger"></td>');
-        }else if(/*status*/ == "3"){
-          $('tbody').append(' <td class = "stage success"></td>');
-        }
-      }
-      $('tbody').append('</tr>');
-    }
-    }
+//   // data
+//   for(var number = 0 ; number < /*number of people*/ ; number++){
+//     if(/* this people is selected*/){
+//       $('tbody').append('<tr><td class= "name-selected">'+/*name*/+'</td>');
+//       for( var index = 0 ; index < /*number of time slot*/ ; index++){
+//         $('tbody').append(' <td class = "stage stage'+/*status*/+' selected"></td>');
+//       }
+//       $('tbody').append('</tr>');
+//     }
+//     else{
+//       $('tbody').append('<tr><td>'+/*name*/+'</td>');
+//       for( var index = 0 ; index < /*number of time slot*/ ; index++){
+//         if(/*status*/ == "1"){
+//           $('tbody').append(' <td class = "stage warning"></td>');
+//         }else if(/*status*/ == "2"){
+//           $('tbody').append(' <td class = "stage danger"></td>');
+//         }else if(/*status*/ == "3"){
+//           $('tbody').append(' <td class = "stage success"></td>');
+//         }
+//       }
+//       $('tbody').append('</tr>');
+//     }
+//     }
 
-  }
+//   }
 
-function updateScore(){
-  for(var col = 1 ; col < document.getElementById('example').rows[0].cells.length ; col++){
-    var red = 0;
-    var yellow = 0;
-    var green = 0;
-    for(var row = 1 ; row < document.getElementById('example').rows.length-1 ; row++){
-      console.log("row["+row+"] col["+col+"] : "+document.getElementById('example').rows[row].cells[col].className );
-      if(document.getElementById('example').rows[row].cells[col].className.indexOf('stage1')>-1 || document.getElementById('example').rows[row].cells[col].className.indexOf('warning')>-1){
-        $(document.getElementById('example').rows[row].cells[col]).html('May Be');
-        yellow++;
-      }else if(document.getElementById('example').rows[row].cells[col].className.indexOf('stage2')>-1 || document.getElementById('example').rows[row].cells[col].className.indexOf('danger')>-1){
-        $(document.getElementById('example').rows[row].cells[col]).html('Busy');
-        red++;
-      }else if(document.getElementById('example').rows[row].cells[col].className.indexOf('stage3')>-1 || document.getElementById('example').rows[row].cells[col].className.indexOf('success')>-1){
-        $(document.getElementById('example').rows[row].cells[col]).html('Available');
-        green++;
-      }
-    }
-    $('.footer'+col).html('<span class="green">'+green+'</span> : <span class="yellow">'+yellow+'</span> : <span class="red">'+red+'</span>');
-  }
-}
+// function updateScore(){
+//   for(var col = 1 ; col < document.getElementById('example').rows[0].cells.length ; col++){
+//     var red = 0;
+//     var yellow = 0;
+//     var green = 0;
+//     for(var row = 1 ; row < document.getElementById('example').rows.length-1 ; row++){
+//       console.log("row["+row+"] col["+col+"] : "+document.getElementById('example').rows[row].cells[col].className );
+//       if(document.getElementById('example').rows[row].cells[col].className.indexOf('stage1')>-1 || document.getElementById('example').rows[row].cells[col].className.indexOf('warning')>-1){
+//         $(document.getElementById('example').rows[row].cells[col]).html('May Be');
+//         yellow++;
+//       }else if(document.getElementById('example').rows[row].cells[col].className.indexOf('stage2')>-1 || document.getElementById('example').rows[row].cells[col].className.indexOf('danger')>-1){
+//         $(document.getElementById('example').rows[row].cells[col]).html('Busy');
+//         red++;
+//       }else if(document.getElementById('example').rows[row].cells[col].className.indexOf('stage3')>-1 || document.getElementById('example').rows[row].cells[col].className.indexOf('success')>-1){
+//         $(document.getElementById('example').rows[row].cells[col]).html('Available');
+//         green++;
+//       }
+//     }
+//     $('.footer'+col).html('<span class="green">'+green+'</span> : <span class="yellow">'+yellow+'</span> : <span class="red">'+red+'</span>');
+//   }
+// }

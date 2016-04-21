@@ -65,6 +65,8 @@ td.highlight {
 	background-repeat: no-repeat;
 	background-size:  100%;
 	margin-left: 5px;
+	margin-bottom: auto;
+	margin-top: auto;
 
 }
 #createevent{
@@ -98,12 +100,13 @@ td.highlight {
 	background: #f24c4c;
 	color:white;
 }
-#login{
-	background-image: url("face-using.png");
+#fblogin{
+	background-image: url("sign-in-facebook.png");
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
-	width:15%;
+	width:25%;
 	height:65%;
+	margin: auto;
 }
 #loginas{
 	position: relative;
