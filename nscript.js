@@ -47,13 +47,12 @@ $("#createevent").click(function(e){
     console.log(count)
     $("div#content").html(originalState);
     e.preventDefault();
+    var count=0;
     var name = $('<input>',{type: "text",name: "name", value: "Enter event name",width:"25%"});
     var desc = $('<input>',{type: "text",name: "description", value: "Type Description",width:"70%"});
-    var addtime = $('<button>',{id: "addslot",type: "button" ,text: "Add time slot"});
-    var timelist = $('<div>',{id: "timeslotlist"});
-    var timelistadd = $('<div>',{id: "timeslotlistadd"});
     var submit = $('<button>',{id: "submit",type: "submit" ,class:"button-primary",text: "Submit",onclick:"join()"});
     var cancel = $('<button>',{id: "cancel",type: "reset" ,text: "Cancel",onclick:'$("div#content").html(originalState)'});
+<<<<<<< HEAD
     $('<div>').addClass("cevent").append(name).append(desc).append(addtime).append(timelist).append(timelistadd).append(submit).append(cancel).appendTo("div#content");
 
     var originalState2 = $("div#timeslotlistadd").html();
@@ -86,15 +85,28 @@ $("#createevent").click(function(e){
         });
       });
     });
+=======
+    $('<div>').addClass("cevent").append(name).append(desc).append(submit).append(cancel).appendTo("div#content");
+
+>>>>>>> 460826767a1f8f1bfb11d2ca9da942b230ad25d6
 });
 // }
 $('#joinevent').click(function(e){
     $("div#content").html(originalState);
     e.preventDefault();
+    var label1=$('<label>',{text:"Date :",class:"slotlabel"});
+    var label2=$('<label>',{text:"From :",class:"slotlabel"});
+    var label3=$('<label>',{text:"To :",class:"slotlabel"});
+    var addform=$('<div>',{id:"addform"});
+    var adddate=$('<input>',{type: "date",name: "date", value: "Enter date"});
+    var addfrom=$('<input>',{type: "time",name: "from", value: "Enter time begin"});
+    var addto=$('<input>',{type: "time",name: "to", value: "Enter time finish"});
+    var addt=$('<button>',{id:"addtime",type:"button",text:"Add",class:"button-primary"});
+    addform.append(label1).append(adddate).append(label2).append(addfrom).append(label3).append(addto).append(addt);
     var table=$('<div>',{class:"table-scrollable"});
     var insidetable=$('<table>',{class:"table table-bordered table-hover",id:"example"});
     table.append(insidetable);
-    $('<div>').addClass("portlet-body").append(table).appendTo("div#content");
+    $('<div>').addClass("portlet-body").append(addform).append(table).appendTo("div#content");
     drawTable(/*jsonfile*/);
     updateScore();
     // stage1 = yellow
@@ -118,10 +130,6 @@ $('#joinevent').click(function(e){
     });
 });
 
-function join(){
-
-}
-
 
 // function drawTable(){
 
@@ -133,6 +141,7 @@ function join(){
 //     $('.table-footer').append('<th class="footer'+(number+1)+'"></th>');
 //   }
   
+<<<<<<< HEAD
 //   // data
 //   for(var number = 0 ; number < /*number of people*/ ; number++){
 //     if(/* this people is selected*/){
@@ -180,3 +189,73 @@ function join(){
 //     $('.footer'+col).html('<span class="green">'+green+'</span> : <span class="yellow">'+yellow+'</span> : <span class="red">'+red+'</span>');
 //   }
 // }
+=======
+  // data
+  for(var number = 0 ; number < /*number of people*/ ; number++){
+    if(/* this people is selected*/){
+      $('tbody').append('<tr><td class= "name-selected">'+/*name*/+'</td>');
+      for( var index = 0 ; index < /*number of time slot*/ ; index++){
+        $('tbody').append(' <td class = "stage stage'+/*status*/+' selected"></td>');
+      }
+      $('tbody').append('</tr>');
+    }
+    else{
+      $('tbody').append('<tr><td>'+/*name*/+'</td>');
+      for( var index = 0 ; index < /*number of time slot*/ ; index++){
+        if(/*status*/ == "1"){
+          $('tbody').append(' <td class = "stage warning"></td>');
+        }else if(/*status*/ == "2"){
+          $('tbody').append(' <td class = "stage danger"></td>');
+        }else if(/*status*/ == "3"){
+          $('tbody').append(' <td class = "stage success"></td>');
+        }
+      }
+      $('tbody').append('</tr>');
+    }
+    }
+
+  }
+
+function updateScore(){
+  for(var col = 1 ; col < document.getElementById('example').rows[0].cells.length ; col++){
+    var red = 0;
+    var yellow = 0;
+    var green = 0;
+    for(var row = 1 ; row < document.getElementById('example').rows.length-1 ; row++){
+      console.log("row["+row+"] col["+col+"] : "+document.getElementById('example').rows
+
+[row].cells[col].className );
+      if(document.getElementById('example').rows[row].cells[col].className.indexOf
+
+('stage1')>-1 || document.getElementById('example').rows[row].cells[col].className.indexOf
+
+('warning')>-1){
+        $(document.getElementById('example').rows[row].cells[col]).html('May Be');
+        yellow++;
+      }else if(document.getElementById('example').rows[row].cells[col].className.indexOf
+
+('stage2')>-1 || document.getElementById('example').rows[row].cells[col].className.indexOf
+
+('danger')>-1){
+        $(document.getElementById('example').rows[row].cells[col]).html('Busy');
+        red++;
+      }else if(document.getElementById('example').rows[row].cells[col].className.indexOf
+
+('stage3')>-1 || document.getElementById('example').rows[row].cells[col].className.indexOf
+
+('success')>-1){
+        $(document.getElementById('example').rows[row].cells[col]).html('Available');
+        green++;
+      }
+    }
+    $('.footer'+col).html('<span class="green">'+green+'</span> : <span 
+
+class="yellow">'+yellow+'</span> : <span class="red">'+red+'</span>');
+  }
+}
+
+
+
+
+
+>>>>>>> 460826767a1f8f1bfb11d2ca9da942b230ad25d6
